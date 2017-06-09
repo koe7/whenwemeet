@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  has_many :timetables, :dependent => :delete_all
+  has_many :group_joins, :dependent => :delete_all
+  has_many :groups, :through => :joins
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
