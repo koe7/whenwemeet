@@ -1,0 +1,2 @@
+module GetCommonTimetableHelper
+end
