@@ -6,12 +6,12 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-users = User.create([{ email: 'jack@mail', password: 'software' }, { email: 'jill@mail', password: 'development' }])
+users = User.create([{ email: 'jack@mail', password: 'software', name: 'jack' }, { email: 'jill@mail', password: 'development', name: 'jill' }])
 
 group_first = Group.create(name: 'jack&jill')
 
-GroupJoin.create(user: users.first, group: group_first, status: 0)
-GroupJoin.create(user: users.second, group: group_first, status: 0)
+GroupJoin.create(user_id: users.first.id, group_id: group_first.id, status: 0)
+GroupJoin.create(user_id: users.second.id, group_id: group_first.id, status: 0)
 
-schedules_of_jack = Timetable.create([{ user: users.first, begins: 3, ends: 6 }, { user: users.first, begins: 30, ends: 35 }])
-schedules_of_jill = Timetable.create([{ user: users.second, begins: 7, ends: 10 }, { user: users.second, begins: 32, ends: 38 }])
+schedules_of_jack = Timetable.create([{ user_id: users.first.id, begins: 3, ends: 6 }, { user_id: users.first.id, begins: 30, ends: 35 }])
+schedules_of_jill = Timetable.create([{ user_id: users.second.id, begins: 7, ends: 10 }, { user_id: users.second.id, begins: 32, ends: 38 }])
