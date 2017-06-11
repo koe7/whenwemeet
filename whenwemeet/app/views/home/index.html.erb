@@ -67,8 +67,22 @@
       defaultView: 'agendaWeek',
       allDaySlot: false,
       slotDuration: '01:00:00',
-      slotLabelFormat: 'H시',
-      columnFormat: 'ddd'
+      slotLabelFormat: 'H:mm',
+      minTime: '07:00:00',
+      columnFormat: 'ddd',
+      editable: true,
+      contentHeight: 'auto',
+      header: false,
+      dayClick: function(date, jsEvent, view) {
+        alert('Clicked on: ' + date.format());
+        events = [
+          {
+            title: 'test_event',
+            start: date.format()
+          }
+        ];
+        $('#calendar').fullCalendar('addEventSource', events);
+      }
     });
   });
 </script>
