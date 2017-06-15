@@ -127,6 +127,9 @@
     end.hours(Math.floor(ends % 48 / 2));
     end.minutes((ends % 2) * 30);
 
+    if (end.isBefore(start))
+      end.day(7);
+
     el['start'] = start;
     el['end'] = end;
     el['title'] = el['content'];
