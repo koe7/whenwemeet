@@ -52,31 +52,33 @@
 </div>
 <script>
   $(document).ready(function() {
-    $('#calendar').fullCalendar({
-      defaultView: 'agendaWeek',
-      allDaySlot: false,
-      slotDuration: '00:30:00',
-      slotLabelFormat: 'H:mm',
-      minTime: '07:00:00',
-      columnFormat: 'ddd',
-      editable: true,
-      contentHeight: 'auto',
-      header: false,
-      editable: true,
-      dayClick: function(date, jsEvent, view) {
-        alert('Clicked on: ' + date.format());
-        events = [
-          {
-            title: 'test_event',
-            start: date.format()
-          }
-        ];
-        $('#calendar').fullCalendar('addEventSource', events);
-      },
-      eventRender: function(event, element) {
-        delete_btn = "<span class='glyphicon glyphicon-trash' aria-hidden='true'></span>";
-        element.append(delete_btn);
-      }
+    $("id^='calendar'").each(function (i, el) {
+      el.fullCalendar({
+        defaultView: 'agendaWeek',
+        allDaySlot: false,
+        slotDuration: '00:30:00',
+        slotLabelFormat: 'H:mm',
+        minTime: '07:00:00',
+        columnFormat: 'ddd',
+        editable: true,
+        contentHeight: 'auto',
+        header: false,
+        editable: true,
+        dayClick: function(date, jsEvent, view) {
+          alert('Clicked on: ' + date.format());
+          events = [
+            {
+              title: 'test_event',
+              start: date.format()
+            }
+          ];
+          $('#calendar').fullCalendar('addEventSource', events);
+        },
+        eventRender: function(event, element) {
+          delete_btn = "<span class='glyphicon glyphicon-trash' aria-hidden='true'></span>";
+          element.append(delete_btn);
+        }
+      });
     });
-  });
+  } 
 </script>
