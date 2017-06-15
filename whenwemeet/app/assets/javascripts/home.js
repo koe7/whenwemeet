@@ -1,4 +1,5 @@
-$(document).ready(function() {
+window.onunload = function(){}; 
+window.onload = function() {
   $("div.bhoechie-tab-menu>div.list-group>form").click(function(e) {
     e.preventDefault();
     $(this).siblings('form.active').removeClass("active");
@@ -17,4 +18,4 @@ $(document).ready(function() {
     }
 
   });
-});
+};

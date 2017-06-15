@@ -19,31 +19,28 @@
     <div class="bhoechie-tab-container">
       <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bhoechie-tab">
         <div class="bhoechie-tab-content active">
-          <center>
-            <div id="calendar"></div>
-          </center>
-        </div>
-        <div class="bhoechie-tab-content"></div>
-    <% if user_signed_in? %>
-      <% current_user.user_groups.reverse_each do |x| %>
-        <div class="bhoechie-tab-content">
-          <% if GroupJoin.where(user_id: current_user.id, group_id: x.id).first.status == 0 %>
-            <div style="float:left">
-              <a type='submit' href='/accept/<%= x.id %>'>accept</a>
+          <% if @current_group != nil %>
+            <div style="float:right">
+              <form action="/destroy/<%= @current_group %>" role="form">
+                <button type='submit' class="btn btn-link" style="z-index: 200">그룹 탈퇴</input>
+              </form>
             </div>
+            <% if GroupJoin.where(user_id: current_user.id, group_id: @current_group).first.status == 0 %>
+              <div style="float:left">
+                <a type='submit' href='/accept/<%= x.id %>'>그룹 가입하기</a>
+              </div>
+            <% else %>
+              <center>
+                <div id="calendar" style="margin-top: 30px;"></div>
+              </center>
+            <% end %>
+          <% else %>
+          <center>
+            <div id="calendar" style="margin-top: 30px;"></div>
+          </center>
           <% end %>
-          <div style="float:right">
-            <form action="/destroy/<%= x.id %>" role="form">
-              <button type='submit' class="btn btn-link">그룹 삭제</input>
-            </form>
-          </div>
-          <center>
-            <div id="calendar_<%=x.id%>"></div>
-            <h2><%=x.name%></h2>
-          <center>
+
         </div>
-      <% end %>
-    <% end %>
       </div>
 
       <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
@@ -149,6 +146,8 @@
       el['start'] = start;
       el['end'] = end;
       el['title'] = el['content'];
+
+      el['color'] = '#f55e61';
     });
   }
 
