@@ -22,6 +22,8 @@
             <div id="calendar"></div>
           </center>
         </div>
+        <div class="bhoechie-tab-content"></div>
+    <% if user_signed_in? %>
       <% current_user.user_groups.each do |x| %>
         <div class="bhoechie-tab-content">
           <center>
@@ -30,6 +32,7 @@
           <center>
         </div>
       <% end %>
+    <% end %>
       </div>
 
       <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
@@ -37,6 +40,10 @@
           <a href="#" class="list-group-item active text-center">
             내 시간표
           </a>
+          <div class="list-group-item">
+            <h4>공유 시간표</h4>
+          </div>
+      <% if user_signed_in? %>
         <% current_user.user_groups.each do |x| %>
           <a href="#" class="list-group-item">
             <h2><%=x.name%></h2><br/>
@@ -45,6 +52,7 @@
             <% end %>
           </a>
         <% end %>
+      <% end %>
         </div>
       </div>
     </div>
