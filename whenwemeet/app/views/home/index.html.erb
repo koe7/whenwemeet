@@ -1,22 +1,22 @@
 <div class="container-fluid">
 
-  <nav class="navbar navbar-default">
+  <nav class="navbar navbar-default" style="background-color:#f58f8f;">
     <div class="container-fluid">
-      <div class="navbar-header">
-        <h2>우리언제봐</h2>
+      <div class="navbar-header" style="color:white;vertical-align:middle;">
+        <h1 style="vertical-align:middle;">우리 언제 봐?</h1>
       </div>
-      <p class="navbar-text navbar-right">
+      <p class="navbar-text navbar-right" style="font-size:20px;font-weight:bold;">
         <% if user_signed_in? %>
-          <%= link_to "Sign out", destroy_user_session_path, method: "delete", class: "navbar-link" %>
+          <%= link_to "Sign out", destroy_user_session_path, method: "delete", class: "header-link" %>
         <% else %>
-          <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path, class: "navbar-link" %>
+          <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path, class: "header-link" %>
         <% end %>
       </p>
     </div>
   </nav>
 
   <div class="row">
-    <div class="bhoechie-tab-container">
+    <div class="bhoechie-tab-container" style="margin-left:20px;">
       <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bhoechie-tab">
         <div class="bhoechie-tab-content active">
           <center>
@@ -53,14 +53,14 @@
           <div class="list-group-item">
             <div style="float:right;">
               <a href="home/popup">
-                <button type='submit' class='btn btn-info'>+</button> 
+                <button type='submit' class='btn btn-danger' style="background-color:#f58f8f;border-color:#f58f8f;">+</button> 
               </a>
             </div>
             <h4>공유 시간표</h4>
           </div>
       <% if user_signed_in? %>
         <% current_user.user_groups.reverse_each do |x| %>
-          <form class="list-group-item <%=GroupJoin.where(user_id: current_user.id, group_id: x.id).first.status == 0 ? "invited" : ""%>" >
+          <form class="list-group-item <%=GroupJoin.where(user_id: current_user.id, group_id: x.id).first.status == 0 ? "invited" : ""%>" style="<%=GroupJoin.where(user_id: current_user.id, group_id: x.id).first.status == 0 ? "color:#ffffff;" : ""%>" >
             <h2><%=x.name%></h2><br/>
             <% x.grouped_users.each do |u| %>
               <%= u.name %> 
