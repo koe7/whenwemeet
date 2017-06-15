@@ -29,7 +29,9 @@
         <div class="bhoechie-tab-content">
           <% if GroupJoin.where(user_id: current_user.id, group_id: x.id).first.status == 0 %>
             <div style="float:left">
-              <a type='submit' href='/accept/<%= x.id %>'>accept</a>
+             <form action="/accept/<%= x.id %>" role="form">
+              <button type='submit' class="btn btn-link">초대 수락</input>
+            </form>
             </div>
           <% end %>
           <div style="float:right">
