@@ -33,7 +33,7 @@ div.bhoechie-tab-menu div.list-group>form{
 }
 div.bhoechie-tab-menu div.list-group>form .glyphicon,
 div.bhoechie-tab-menu div.list-group>form .fa {
-  color: #5A55A3;
+  color: #f55261;
 }
 div.bhoechie-tab-menu div.list-group>form:first-child{
   border-top-left-radius: 0;
@@ -46,8 +46,8 @@ div.bhoechie-tab-menu div.list-group>form:last-child{
 div.bhoechie-tab-menu div.list-group>form.active,
 div.bhoechie-tab-menu div.list-group>form.active .glyphicon,
 div.bhoechie-tab-menu div.list-group>form.active .fa{
-  background-color: #5A55A3;
-  background-image: #5A55A3;
+  background-color: #f55261;
+  background-image: #f55261;
   color: #ffffff;
 }
 div.bhoechie-tab-menu div.list-group>form.active:after{
@@ -59,7 +59,7 @@ div.bhoechie-tab-menu div.list-group>form.active:after{
   border-right: 0;
   border-bottom: 13px solid transparent;
   border-top: 13px solid transparent;
-  border-right: 10px solid #5A55A3;
+  border-right: 10px solid #f55261;
 }
 
 div.bhoechie-tab-content{
@@ -73,5 +73,9 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
   display: none;
 }
 .invited {
-  background-color: #5A55A3;
+  background-color: #f55261;
+}
+.list-group-item.active {
+  background-color: #f55261;
+  background-image: #f55261;
 }
