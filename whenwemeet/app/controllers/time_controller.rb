@@ -25,7 +25,7 @@ class TimeController < ApplicationController
   end
 
   def get_common
-    groupjoin = GroupJoin.where(group_id: params[:group_id].to_i)
+    groupjoin = GroupJoin.where(group_id: params[:group_id].to_i, status: 1)
     total_tt_list = (0..335).to_a
     common_tt_list = []
     result_list = []
