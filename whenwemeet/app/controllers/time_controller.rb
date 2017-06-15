@@ -57,7 +57,7 @@ class TimeController < ApplicationController
       end
       last_tt = Hash.new
       last_tt['begins'] = common_tt_list.last + 1
-      last_tt['ends'] = 251
+      last_tt['ends'] = 335
       result_list << last_tt
     end
     @time_list = result_list
