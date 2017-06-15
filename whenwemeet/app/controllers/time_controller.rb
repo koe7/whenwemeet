@@ -36,8 +36,8 @@ class TimeController < ApplicationController
       end
     end
     common_tt_list = common_tt_list | common_tt_list
-    
     if common_tt_list.size != 0
+      common_tt_list = common_tt_list.sort
       begins = 0
       ends = -1
       if common_tt_list.first != 0
