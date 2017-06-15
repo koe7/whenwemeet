@@ -43,7 +43,9 @@
       </div>
 
       <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
+
         <div class="list-group">
+<!--
           <a href="#" class="list-group-item active text-center">
             <h4 class="glyphicon glyphicon-plane"></h4><br/>Flight
           </a>
@@ -56,7 +58,25 @@
           <a href="#" class="list-group-item text-center">
             <h4 class="glyphicon glyphicon-cutlery"></h4><br/>Restaurant
           </a>
+-->
+	<% @groups.each do |g|%>
+		<a href="#" class="list-group-item text-center">
+		<h4 class="glyphicon"></h4><%= g.name%>
+		</a>
+	<% end %>
+
         </div>
+	<div>
+	  <!--
+	  <a href ="home/popup">
+	    <center><button class ="btn btn-default" type="submit">+</button></center>
+	  </a>
+	-->
+	  <a href="home/popup" onclick="window.open(this.href, "group","width=370, height=360, resizable=yes, scrollbars=yes");return false;" target="_blank">
+	    <center><button class ="btn btn-default" type="submit">+</button></center>
+	  </a>
+
+	</div>
       </div>
     </div>
   </div>
