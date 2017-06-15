@@ -26,6 +26,9 @@
     <% if user_signed_in? %>
       <% current_user.user_groups.each do |x| %>
         <div class="bhoechie-tab-content">
+          <div style="float:right">
+            <a type='submit' href='/destroy/<%= x.id %>'>delete</a>
+          </div>
           <center>
             <div id="calendar_<%=x.id%>"></div>
             <h2><%=x.name%></h2>
@@ -37,20 +40,20 @@
 
       <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
         <div class="list-group">
-          <a href="#" class="list-group-item active">
+          <form class="list-group-item active">
             <h4>내 시간표</h4>
-          </a>
+          </form>
           <div class="list-group-item">
             <h4>공유 시간표</h4>
           </div>
       <% if user_signed_in? %>
         <% current_user.user_groups.each do |x| %>
-          <a href="#" class="list-group-item">
+          <form action="destroy/<%=x.id%>" data-post_id="<%=x.id%>" class="list-group-item" method="POST">
             <h2><%=x.name%></h2><br/>
             <% x.grouped_users.each do |u| %>
               <%= u.name %> 
             <% end %>
-          </a>
+          </form>
         <% end %>
       <% end %>
         </div>

@@ -10,4 +10,9 @@ class GroupController < ApplicationController
     gj.destroy
     redirect_to root_path
   end
+  def destroy
+    @gj = GroupJoin.where(group_id: params[:post_id].to_i, user_id: current_user.id).first
+    @gj.destroy
+    redirect_to root_path
+  end
 end
