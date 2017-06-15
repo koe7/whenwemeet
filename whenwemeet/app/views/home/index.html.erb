@@ -22,31 +22,12 @@
             <div id="calendar"></div>
           </center>
         </div>
-        <div class="bhoechie-tab-content active">
-        </div>
-        <div class="bhoechie-tab-content">
-          <center>
-            <h1 class="glyphicon glyphicon-road" style="font-size:14em;color:#55518a"></h1>
-            <h2 style="margin-top: 0;color:#55518a">Coming Soon</h2>
-          </center>
-        </div>
-        <div class="bhoechie-tab-content">
-          <center>
-            <h1 class="glyphicon glyphicon-home" style="font-size:12em;color:#55518a"></h1>
-            <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
-            <h3 style="margin-top: 0;color:#55518a">Hotel Directory</h3>
-          </center>
-        </div>
-        <div class="bhoechie-tab-content">
-          <center>
-            <h1 class="glyphicon glyphicon-cutlery" style="font-size:12em;color:#55518a"></h1>
-            <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
-            <h3 style="margin-top: 0;color:#55518a">Restaurant Diirectory</h3>
-          </center>
-        </div>
       <% current_user.user_groups.each do |x| %>
         <div class="bhoechie-tab-content">
-          <h1><%=x.name%></h1>
+          <center>
+            <div id="calendar_<%=x.id%>"></div>
+            <h2><%=x.name%></h2>
+          <center>
         </div>
       <% end %>
       </div>
@@ -56,24 +37,9 @@
           <a href="#" class="list-group-item active text-center">
             내 시간표
           </a>
-          <div class="list-group-item">
-            <h4>공유 시간표</h4>
-          </div>
-          <a href="#" class="list-group-item" style="background-color: #f58f8f">
-            <h2>인간관계의 심리학<i><b> new!</b></i></h2><br/>
-            이수현, 김수현, 박수현<br/>
-            <button type="button" class="btn btn-default btn-lg">수락</button>
-            <button type="button" class="btn btn-default btn-lg">거절</button>
-          </a>
-          <a href="#" class="list-group-item">
-            <h2>소프트웨어공학</h2><br/>이수현, 고태건, 최윤영, 장선웅
-          </a>
-          <a href="#" class="list-group-item">
-            <h2>운영체제</h2><br/>이수현, OOO, OOO
-          </a>
         <% current_user.user_groups.each do |x| %>
           <a href="#" class="list-group-item">
-            <h2>x.name</h2><br/>
+            <h2><%=x.name%></h2><br/>
             <% x.grouped_users.each do |u| %>
               <%= u.name %> 
             <% end %>
