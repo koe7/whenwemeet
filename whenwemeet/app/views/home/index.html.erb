@@ -39,6 +39,7 @@
       </div>
 
       <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
+
         <div class="list-group">
           <form class="list-group-item active">
             <h4>내 시간표</h4>
@@ -57,6 +58,17 @@
         <% end %>
       <% end %>
         </div>
+	<div>
+	  <!--
+	  <a href ="home/popup">
+	    <center><button class ="btn btn-default" type="submit">+</button></center>
+	  </a>
+	-->
+	  <a href="home/popup" onclick="window.open(this.href, "group","width=370, height=360, resizable=yes, scrollbars=yes");return false;" target="_blank">
+	    <center><button class ="btn btn-default" type="submit">+</button></center>
+	  </a>
+
+	</div>
       </div>
     </div>
   </div>
