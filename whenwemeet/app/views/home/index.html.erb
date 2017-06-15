@@ -49,12 +49,12 @@
       <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
 
         <div class="list-group">
-          <form class="list-group-item active">
+          <form class="list-group-item <%= @current_group == nil ? 'active' : '' %>">
             <h4>내 시간표</h4>
           </form>
           <div class="list-group-item">
             <div style="float:right;">
-              <a href="home/popup">
+              <a href="/home/popup">
                 <button type='submit' class='btn btn-info'>+</button> 
               </a>
             </div>
@@ -62,7 +62,7 @@
           </div>
       <% if user_signed_in? %>
         <% current_user.user_groups.reverse_each do |x| %>
-          <form class="list-group-item <%=GroupJoin.where(user_id: current_user.id, group_id: x.id).first.status == 0 ? "invited" : ""%>" >
+          <form class="list-group-item <%= @current_group == x.id ? 'active' : '' %> <%=GroupJoin.where(user_id: current_user.id, group_id: x.id).first.status == 0 ? "invited" : ""%>" data-groupid="<%= x.id %>">
             <h2><%=x.name%></h2><br/>
             <% x.grouped_users.each do |u| %>
               <%= u.name %> 
@@ -151,7 +151,6 @@
       el['title'] = el['content'];
     });
   }
-    
 
   $(document).ready(function() {
     $("[id^='calendar']").each(function (i, el) {
@@ -162,11 +161,11 @@
         slotLabelFormat: 'H:mm',
         minTime: '07:00:00',
         columnFormat: 'ddd',
-        editable: true,
         contentHeight: 'auto',
         header: false,
-        editable: true,
         events: events,
+        <% if @current_group == nil %>
+        editable: true,
         dayClick: function(date, jsEvent, view) {
           endTime = moment(date);
           endTime.hours(endTime.hours() + 1);
@@ -181,6 +180,7 @@
         eventResize: function(event) {
           editEvent(event);
         }
+        <% end %>
       });
     });
   });
