@@ -104,6 +104,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">일정을 삭제할까요?</h4>
         </div>
+        <input type="hidden" id="removeEventId" name="id"></input>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
           <button type="submit" class="btn btn-primary" >삭제</button>
@@ -116,31 +117,34 @@
 </div>
 
 <script>
-  eventsRaw = $('#dataContainer').data('events');
-  events = JSON.parse(eventsRaw.replace(/=>/gi, ':'));
+  var eventsRaw = $('#dataContainer').data('events');
+  var events = []
+  if (eventsRaw.length > 0) {
+    events = JSON.parse(eventsRaw.replace(/=>/gi, ':'));
 
-  events.forEach(function (el) {
-    begins = el['begins'];
-    ends = el['ends'] + 1;
+    events.forEach(function (el) {
+      begins = el['begins'];
+      ends = el['ends'] + 1;
 
-    start = moment();
-    start.day(Math.floor(begins / 48));
-    start.hours(Math.floor(begins % 48 / 2));
-    start.minutes((begins % 2) * 30);
+      start = moment();
+      start.day(Math.floor(begins / 48));
+      start.hours(Math.floor(begins % 48 / 2));
+      start.minutes((begins % 2) * 30);
 
-    end = moment();
-    end.day(Math.floor(ends / 48));
-    end.hours(Math.floor(ends % 48 / 2));
-    end.minutes((ends % 2) * 30);
+      end = moment();
+      end.day(Math.floor(ends / 48));
+      end.hours(Math.floor(ends % 48 / 2));
+      end.minutes((ends % 2) * 30);
 
-    if (end.isBefore(start))
-      end.day(7);
+      if (end.isBefore(start))
+        end.day(7);
 
-    el['start'] = start;
-    el['end'] = end;
-    el['title'] = el['content'];
-  });
-  
+      el['start'] = start;
+      el['end'] = end;
+      el['title'] = el['content'];
+    });
+  }
+    
 
   $(document).ready(function() {
     $("[id^='calendar']").each(function (i, el) {
