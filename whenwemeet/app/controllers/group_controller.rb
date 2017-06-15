@@ -1,11 +1,13 @@
 class GroupController < ApplicationController
   def accept
-    gj = Group.find(group_id: params[:id], user_id: current_user)
+    gj = GroupJoin.where(group_id: params[:id].to_i, user_id: current_user.id).first
     gj.status = 1
+    gj.save
     redirect_to root_path
   end
   def denial
-    gj = Group.where(group_id: params[:id], user_id: current_user)
+    gj = GroupJoin.where(group_id: params[:id].to_i, user_id: current_user.id).first
     gj.destroy
+    redirect_to root_path
   end
 end
