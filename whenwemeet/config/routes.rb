@@ -3,6 +3,14 @@ Rails.application.routes.draw do
 
   get 'group/denial'
 
+  get 'time/save'
+
+  get 'time/delete'
+
+  get 'time/get_personal'
+
+  get 'time/get_common'
+
   get 'get_common_timetable/time_list'
 
   root 'home#index'
