@@ -33,7 +33,9 @@
             </div>
           <% end %>
           <div style="float:right">
-            <a type='submit' href='/destroy/<%= x.id %>'>delete</a>
+            <form action="/destroy/<%= x.id %>" role="form">
+              <button type='submit' class="btn btn-link">그룹 삭제</input>
+            </form>
           </div>
           <center>
             <div id="calendar_<%=x.id%>"></div>
