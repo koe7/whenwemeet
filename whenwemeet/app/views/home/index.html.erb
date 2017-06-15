@@ -1,13 +1,16 @@
 <div class="container-fluid">
   <nav class="navbar navbar-default">
-    <div class="nav navbar-nav">
-      <p class="navbar-left">whenwemeet</p>
-      <button type="button" class="btn btn-default navbar-btn navbar-right">Signin</button>
-      <% if user_signed_in? %>
-        <%= link_to "Sign out", destroy_user_session_path, method: "delete" %>
-      <% else %>
-        <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %>
-      <% end %>
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <h2>우리언제봐</h2>
+      </div>
+      <p class="navbar-text navbar-right">
+        <% if user_signed_in? %>
+          <%= link_to "Sign out", destroy_user_session_path, method: "delete", class: "navbar-link" %>
+        <% else %>
+          <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path, class: "navbar-link" %>
+        <% end %>
+      </p>
     </div>
   </nav>
 
@@ -19,52 +22,41 @@
             <div id="calendar"></div>
           </center>
         </div>
+        <div class="bhoechie-tab-content"></div>
+    <% if user_signed_in? %>
+      <% current_user.user_groups.each do |x| %>
         <div class="bhoechie-tab-content">
+          <div style="float:right">
+            <a type='submit' href='/destroy/<%= x.id %>'>delete</a>
+          </div>
           <center>
-            <h1 class="glyphicon glyphicon-road" style="font-size:14em;color:#55518a"></h1>
-            <h2 style="margin-top: 0;color:#55518a">Coming Soon</h2>
-          </center>
-        </div>
-        <div class="bhoechie-tab-content">
+            <div id="calendar_<%=x.id%>"></div>
+            <h2><%=x.name%></h2>
           <center>
-            <h1 class="glyphicon glyphicon-home" style="font-size:12em;color:#55518a"></h1>
-            <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
-            <h3 style="margin-top: 0;color:#55518a">Hotel Directory</h3>
-          </center>
         </div>
-        <div class="bhoechie-tab-content">
-          <center>
-            <h1 class="glyphicon glyphicon-cutlery" style="font-size:12em;color:#55518a"></h1>
-            <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
-            <h3 style="margin-top: 0;color:#55518a">Restaurant Diirectory</h3>
-          </center>
-        </div>
-
+      <% end %>
+    <% end %>
       </div>
 
       <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
 
         <div class="list-group">
-<!--
-          <a href="#" class="list-group-item active text-center">
-            <h4 class="glyphicon glyphicon-plane"></h4><br/>Flight
-          </a>
-          <a href="#" class="list-group-item text-center">
-            <h4 class="glyphicon glyphicon-road"></h4><br/>Train
-          </a>
-          <a href="#" class="list-group-item text-center">
-            <h4 class="glyphicon glyphicon-home"></h4><br/>Hotel
-          </a>
-          <a href="#" class="list-group-item text-center">
-            <h4 class="glyphicon glyphicon-cutlery"></h4><br/>Restaurant
-          </a>
--->
-	<% @groups.each do |g|%>
-		<a href="#" class="list-group-item text-center">
-		<h4 class="glyphicon"></h4><%= g.name%>
-		</a>
-	<% end %>
-
+          <form class="list-group-item active">
+            <h4>내 시간표</h4>
+          </form>
+          <div class="list-group-item">
+            <h4>공유 시간표</h4>
+          </div>
+      <% if user_signed_in? %>
+        <% current_user.user_groups.each do |x| %>
+          <form action="destroy/<%=x.id%>" data-post_id="<%=x.id%>" class="list-group-item" method="POST">
+            <h2><%=x.name%></h2><br/>
+            <% x.grouped_users.each do |u| %>
+              <%= u.name %> 
+            <% end %>
+          </form>
+        <% end %>
+      <% end %>
         </div>
 	<div>
 	  <!--
@@ -86,7 +78,7 @@
     $('#calendar').fullCalendar({
       defaultView: 'agendaWeek',
       allDaySlot: false,
-      slotDuration: '01:00:00',
+      slotDuration: '00:30:00',
       slotLabelFormat: 'H:mm',
       minTime: '07:00:00',
       columnFormat: 'ddd',
