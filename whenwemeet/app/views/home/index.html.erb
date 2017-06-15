@@ -27,7 +27,9 @@
             </div>
             <% if GroupJoin.where(user_id: current_user.id, group_id: @current_group).first.status == 0 %>
               <div style="float:left">
-                <a type='submit' href='/accept/<%= @current_group %>'>그룹 가입하기</a>
+                <form action="/accept/<%= @current_group %>" role="form">
+                  <button type='submit' class="btn btn-link" style="z-index: 200">그룹 가입하기</input>
+                </form>
               </div>
             <% else %>
               <center>
