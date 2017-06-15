@@ -19,6 +19,7 @@ class HomeController < ApplicationController
 
   def popup
     @users = User.all
+    @current_user = User.where('id=?',current_user.id)
   end
 
   def groupadd
