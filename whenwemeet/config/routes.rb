@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get 'group/denial'
 
   get 'time/save'
+  
+  get 'time/edit'
 
   get 'time/delete'
 
