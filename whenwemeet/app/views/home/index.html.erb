@@ -27,6 +27,11 @@
     <% if user_signed_in? %>
       <% current_user.user_groups.reverse_each do |x| %>
         <div class="bhoechie-tab-content">
+          <% if GroupJoin.where(user_id: current_user.id, group_id: x.id).first.status == 0 %>
+            <div style="float:left">
+              <a type='submit' href='/accept/<%= x.id %>'>accept</a>
+            </div>
+          <% end %>
           <div style="float:right">
             <a type='submit' href='/destroy/<%= x.id %>'>delete</a>
           </div>
@@ -55,7 +60,7 @@
           </div>
       <% if user_signed_in? %>
         <% current_user.user_groups.reverse_each do |x| %>
-          <form action="destroy/<%=x.id%>" data-post_id="<%=x.id%>" class="list-group-item" method="POST">
+          <form class="list-group-item <%=GroupJoin.where(user_id: current_user.id, group_id: x.id).first.status == 0 ? "invited" : ""%>" >
             <h2><%=x.name%></h2><br/>
             <% x.grouped_users.each do |u| %>
               <%= u.name %> 
