@@ -33,19 +33,19 @@ class HomeController < ApplicationController
     group_join.status = 1
     group_join.save
 
+    if emails != nil
+      for i in 0..emails.length-1
+        for user_id in User.where('email=?',emails[i]).ids
 
-    for i in 0..emails.length-1
-      for user_id in User.where('email=?',emails[i]).ids
+          group_join=GroupJoin.new
+          group_join.user_id = user_id
+          group_join.group_id = group.id
+          group_join.status = 0
+          group_join.save
 
-        group_join=GroupJoin.new
-        group_join.user_id = user_id
-        group_join.group_id = group.id
-        group_join.status = 0
-        group_join.save
-
+        end
       end
     end
-
     redirect_to root_path
   end
 

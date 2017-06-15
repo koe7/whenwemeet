@@ -24,7 +24,7 @@
         </div>
         <div class="bhoechie-tab-content"></div>
     <% if user_signed_in? %>
-      <% current_user.user_groups.each do |x| %>
+      <% current_user.user_groups.reverse_each do |x| %>
         <div class="bhoechie-tab-content">
           <div style="float:right">
             <a type='submit' href='/destroy/<%= x.id %>'>delete</a>
@@ -53,7 +53,7 @@
             <h4>공유 시간표</h4>
           </div>
       <% if user_signed_in? %>
-        <% current_user.user_groups.each do |x| %>
+        <% current_user.user_groups.reverse_each do |x| %>
           <form action="destroy/<%=x.id%>" data-post_id="<%=x.id%>" class="list-group-item" method="POST">
             <h2><%=x.name%></h2><br/>
             <% x.grouped_users.each do |u| %>
