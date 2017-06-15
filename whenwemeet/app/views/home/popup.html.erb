@@ -13,13 +13,18 @@
         alert('no!!!!!');
 
     } else{
+	var temp = []
+	var $test = $('#list').find('.test')
+		for(var i=0; i<$test.length; i++){
+		    temp.push($test[i].value);
+		}
+		if(temp.indexOf(e)!=-1){
+		    alert('that user is already in invitation list!');
 
-           $('#list').append('<li>'+'<input type="textbox"name="invitation[]" value ='+e+' readonly >'+'</li>');
-	
+		} else{
+		    $('#list').append('<li>'+'<input type="textbox" class="test" name="invitation[]" value ='+e+' readonly >'+'</li>');
+	}
     }
-
-   
-    
   }
 </script>
 
