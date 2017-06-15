@@ -4,14 +4,21 @@
     var e=document.getElementsByName("email")[0].value;
 
     var userlist=[];
+    var current_userlist=[];
 
     <% @users.each do |u|%>
         userlist.push('<%=u.email%>');
     <% end %>
 
+    <% @current_user.each do |u|%>
+        current_userlist.push('<%=u.email%>');
+    <% end %>
+
     if( userlist.indexOf(e)==-1 ){
         alert('there is no user who you want!');
 
+    } else if(current_userlist[0]==e){
+	alert('that is you!')
     } else{
 	var temp = []
 	var $test = $('#list').find('.test')
