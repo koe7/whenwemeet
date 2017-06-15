@@ -19,35 +19,34 @@
     <div class="bhoechie-tab-container" style="margin-left:20px;">
       <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bhoechie-tab">
         <div class="bhoechie-tab-content active">
-          <center>
-            <div id="calendar"></div>
-          </center>
-        </div>
-        <div class="bhoechie-tab-content"></div>
-    <% if user_signed_in? %>
-      <% current_user.user_groups.reverse_each do |x| %>
-        <div class="bhoechie-tab-content">
-          <% if GroupJoin.where(user_id: current_user.id, group_id: x.id).first.status == 0 %>
-            <div style="float:left">
-              <a type='submit' href='/accept/<%= x.id %>'>accept</a>
+          <% if @current_group != nil %>
+            <div style="float:right">
+              <form action="/destroy/<%= @current_group %>" role="form">
+                <button type='submit' class="btn btn-link" style="z-index: 200">그룹 탈퇴</input>
+              </form>
             </div>
+            <% if GroupJoin.where(user_id: current_user.id, group_id: @current_group).first.status == 0 %>
+              <div style="float:left">
+                <a type='submit' href='/accept/<%= x.id %>'>그룹 가입하기</a>
+              </div>
+            <% else %>
+              <center>
+                <div id="calendar" style="margin-top: 30px;"></div>
+              </center>
+            <% end %>
+          <% else %>
+          <center>
+            <div id="calendar" style="margin-top: 30px;"></div>
+          </center>
           <% end %>
-          <div style="float:right">
-            <a type='submit' href='/destroy/<%= x.id %>'>delete</a>
-          </div>
-          <center>
-            <div id="calendar_<%=x.id%>"></div>
-            <h2><%=x.name%></h2>
-          <center>
+
         </div>
-      <% end %>
-    <% end %>
       </div>
 
       <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
 
         <div class="list-group">
-          <form class="list-group-item active">
+          <form class="list-group-item <%= @current_group == nil ? 'active' : '' %>">
             <h4>내 시간표</h4>
           </form>
           <div class="list-group-item">
@@ -60,7 +59,7 @@
           </div>
       <% if user_signed_in? %>
         <% current_user.user_groups.reverse_each do |x| %>
-          <form class="list-group-item <%=GroupJoin.where(user_id: current_user.id, group_id: x.id).first.status == 0 ? "invited" : ""%>" style="<%=GroupJoin.where(user_id: current_user.id, group_id: x.id).first.status == 0 ? "color:#ffffff;" : ""%>" >
+          <form class="list-group-item <%= @current_group == x.id ? 'active' : '' %> <%=GroupJoin.where(user_id: current_user.id, group_id: x.id).first.status == 0 ? "invited" : ""%>" data-groupid="<%= x.id %>" style="<%=GroupJoin.where(user_id: current_user.id, group_id: x.id).first.status == 0 ? "color:#ffffff;" : ""%>">
             <h2><%=x.name%></h2><br/>
             <% x.grouped_users.each do |u| %>
               <%= u.name %> 
@@ -147,9 +146,10 @@
       el['start'] = start;
       el['end'] = end;
       el['title'] = el['content'];
+
+      el['color'] = '#f55e61';
     });
   }
-    
 
   $(document).ready(function() {
     $("[id^='calendar']").each(function (i, el) {
@@ -160,11 +160,11 @@
         slotLabelFormat: 'H:mm',
         minTime: '07:00:00',
         columnFormat: 'ddd',
-        editable: true,
         contentHeight: 'auto',
         header: false,
-        editable: true,
         events: events,
+        <% if @current_group == nil %>
+        editable: true,
         dayClick: function(date, jsEvent, view) {
           endTime = moment(date);
           endTime.hours(endTime.hours() + 1);
@@ -179,6 +179,7 @@
         eventResize: function(event) {
           editEvent(event);
         }
+        <% end %>
       });
     });
   });
