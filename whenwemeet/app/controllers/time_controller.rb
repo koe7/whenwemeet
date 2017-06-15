@@ -43,7 +43,7 @@ class TimeController < ApplicationController
       if common_tt_list.first != 0
         first_tt = Hash.new
         first_tt['begins'] = 0
-        first_tt['ends'] = common_tt_list.first
+        first_tt['ends'] = common_tt_list.first - 1
         first_tt['content'] = "empty"
         result_list << first_tt
       end
@@ -61,6 +61,7 @@ class TimeController < ApplicationController
       result_list << last_tt
     end
     @time_list = result_list
+    @current_group = params[:group_id].to_i
     render "home/index"
   end
 end

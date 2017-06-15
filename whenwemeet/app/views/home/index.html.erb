@@ -1,61 +1,65 @@
 <div class="container-fluid">
 
-  <nav class="navbar navbar-default">
+  <nav class="navbar navbar-default" style="background-color:#f58f8f;">
     <div class="container-fluid">
-      <div class="navbar-header">
-        <h2>우리언제봐</h2>
+      <div class="navbar-header" style="color:white;vertical-align:middle;">
+        <h1 style="vertical-align:middle;">우리 언제 봐?</h1>
       </div>
-      <p class="navbar-text navbar-right">
+      <p class="navbar-text navbar-right" style="font-size:20px;font-weight:bold;">
         <% if user_signed_in? %>
-          <%= link_to "Sign out", destroy_user_session_path, method: "delete", class: "navbar-link" %>
+          <%= link_to "Sign out", destroy_user_session_path, method: "delete", class: "header-link" %>
         <% else %>
-          <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path, class: "navbar-link" %>
+          <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path, class: "header-link" %>
         <% end %>
       </p>
     </div>
   </nav>
 
   <div class="row">
-    <div class="bhoechie-tab-container">
+    <div class="bhoechie-tab-container" style="margin-left:20px;">
       <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bhoechie-tab">
         <div class="bhoechie-tab-content active">
+          <% if @current_group != nil %>
+            <div style="float:right">
+              <form action="/destroy/<%= @current_group %>" role="form">
+                <button type='submit' class="btn btn-link" style="z-index: 200">그룹 탈퇴</input>
+              </form>
+            </div>
+            <% if GroupJoin.where(user_id: current_user.id, group_id: @current_group).first.status == 0 %>
+              <div style="float:left">
+                <a type='submit' href='/accept/<%= @current_group.id %>'>그룹 가입하기</a>
+              </div>
+            <% else %>
+              <center>
+                <div id="calendar" style="margin-top: 30px;"></div>
+              </center>
+            <% end %>
+          <% else %>
           <center>
-            <div id="calendar"></div>
+            <div id="calendar" style="margin-top: 30px;"></div>
           </center>
+          <% end %>
+
         </div>
-        <div class="bhoechie-tab-content"></div>
-    <% if user_signed_in? %>
-      <% current_user.user_groups.reverse_each do |x| %>
-        <div class="bhoechie-tab-content">
-          <div style="float:right">
-            <a type='submit' href='/destroy/<%= x.id %>'>delete</a>
-          </div>
-          <center>
-            <div id="calendar_<%=x.id%>"></div>
-            <h2><%=x.name%></h2>
-          <center>
-        </div>
-      <% end %>
-    <% end %>
       </div>
 
       <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
 
         <div class="list-group">
-          <form class="list-group-item active">
+          <form class="list-group-item <%= @current_group == nil ? 'active' : '' %>">
             <h4>내 시간표</h4>
           </form>
           <div class="list-group-item">
             <div style="float:right;">
               <a href="home/popup">
-                <button type='submit' class='btn btn-info'>+</button> 
+                <button type='submit' class='btn btn-danger' style="background-color:#f58f8f;border-color:#f58f8f;">+</button> 
               </a>
             </div>
             <h4>공유 시간표</h4>
           </div>
       <% if user_signed_in? %>
         <% current_user.user_groups.reverse_each do |x| %>
-          <form action="destroy/<%=x.id%>" data-post_id="<%=x.id%>" class="list-group-item" method="POST">
+          <form class="list-group-item <%= @current_group == x.id ? 'active' : '' %> <%=GroupJoin.where(user_id: current_user.id, group_id: x.id).first.status == 0 ? "invited" : ""%>" data-groupid="<%= x.id %>" style="<%=GroupJoin.where(user_id: current_user.id, group_id: x.id).first.status == 0 ? "color:#ffffff;" : ""%>">
             <h2><%=x.name%></h2><br/>
             <% x.grouped_users.each do |u| %>
               <%= u.name %> 
@@ -104,6 +108,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">일정을 삭제할까요?</h4>
         </div>
+        <input type="hidden" id="removeEventId" name="id"></input>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
           <button type="submit" class="btn btn-primary" >삭제</button>
@@ -116,31 +121,35 @@
 </div>
 
 <script>
-  eventsRaw = $('#dataContainer').data('events');
-  events = JSON.parse(eventsRaw.replace(/=>/gi, ':'));
+  var eventsRaw = $('#dataContainer').data('events');
+  var events = []
+  if (eventsRaw.length > 0) {
+    events = JSON.parse(eventsRaw.replace(/=>/gi, ':'));
 
-  events.forEach(function (el) {
-    begins = el['begins'];
-    ends = el['ends'] + 1;
+    events.forEach(function (el) {
+      begins = el['begins'];
+      ends = el['ends'] + 1;
 
-    start = moment();
-    start.day(Math.floor(begins / 48));
-    start.hours(Math.floor(begins % 48 / 2));
-    start.minutes((begins % 2) * 30);
+      start = moment();
+      start.day(Math.floor(begins / 48));
+      start.hours(Math.floor(begins % 48 / 2));
+      start.minutes((begins % 2) * 30);
 
-    end = moment();
-    end.day(Math.floor(ends / 48));
-    end.hours(Math.floor(ends % 48 / 2));
-    end.minutes((ends % 2) * 30);
+      end = moment();
+      end.day(Math.floor(ends / 48));
+      end.hours(Math.floor(ends % 48 / 2));
+      end.minutes((ends % 2) * 30);
 
-    if (end.isBefore(start))
-      end.day(7);
+      if (end.isBefore(start))
+        end.day(7);
 
-    el['start'] = start;
-    el['end'] = end;
-    el['title'] = el['content'];
-  });
-  
+      el['start'] = start;
+      el['end'] = end;
+      el['title'] = el['content'];
+
+      el['color'] = '#f55e61';
+    });
+  }
 
   $(document).ready(function() {
     $("[id^='calendar']").each(function (i, el) {
@@ -151,11 +160,11 @@
         slotLabelFormat: 'H:mm',
         minTime: '07:00:00',
         columnFormat: 'ddd',
-        editable: true,
         contentHeight: 'auto',
         header: false,
-        editable: true,
         events: events,
+        <% if @current_group == nil %>
+        editable: true,
         dayClick: function(date, jsEvent, view) {
           endTime = moment(date);
           endTime.hours(endTime.hours() + 1);
@@ -170,6 +179,7 @@
         eventResize: function(event) {
           editEvent(event);
         }
+        <% end %>
       });
     });
   });
