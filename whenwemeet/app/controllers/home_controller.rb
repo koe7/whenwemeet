@@ -15,6 +15,7 @@ class HomeController < ApplicationController
     else
       @time_list = []
     end
+  end
 
   def popup
 	@users = User.all
