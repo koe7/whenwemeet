@@ -82,6 +82,7 @@
       editable: true,
       contentHeight: 'auto',
       header: false,
+      editable: true,
       dayClick: function(date, jsEvent, view) {
         alert('Clicked on: ' + date.format());
         events = [
@@ -91,6 +92,10 @@
           }
         ];
         $('#calendar').fullCalendar('addEventSource', events);
+      },
+      eventRender: function(event, element) {
+        delete_btn = "<span class='glyphicon glyphicon-trash' aria-hidden='true'></span>";
+        element.append(delete_btn);
       }
     });
   });
