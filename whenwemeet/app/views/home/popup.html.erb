@@ -1,5 +1,5 @@
 <script type="text/javascript">
-  function mySubmit(start) {
+  function mySubmit() {
 
     var e=document.getElementsByName("email")[0].value;
 
@@ -10,16 +10,21 @@
     <% end %>
 
     if( userlist.indexOf(e)==-1 ){
-        alert('no!!!!!');
+        alert('there is no user who you want!');
 
     } else{
+	var temp = []
+	var $test = $('#list').find('.test')
+		for(var i=0; i<$test.length; i++){
+		    temp.push($test[i].value);
+		}
+		if(temp.indexOf(e)!=-1){
+		    alert('that user is already in invitation list!');
 
-           $('#list').append('<li>'+'<input type="textbox"name="invitation[]" value ='+e+' readonly >'+'</li>');
-	
+		} else{
+		    $('#list').append('<li>'+'<input type="textbox" class="test" name="invitation[]" value ='+e+' readonly >'+'</li>');
+	}
     }
-
-   
-    
   }
 </script>
 
@@ -32,7 +37,7 @@
 	<div class ="form-group">
 		<label for="email">Mail</label>
 		<input type="text" class="form-control" name="email">
-		<input type="button" value="emailsearch" onclick="mySubmit(1)">
+		<input type="button" value="emailsearch" onclick="mySubmit()">
 	</div>
 	<div class ="form-group">
 		<label for="invitation">Invitation List</label>
@@ -42,4 +47,3 @@
 	<button type="submit" class="btn btn-default">submit</button>
 </form>
 </div>
-
