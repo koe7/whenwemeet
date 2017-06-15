@@ -45,6 +45,11 @@
             <h4>내 시간표</h4>
           </form>
           <div class="list-group-item">
+            <div style="float:right;">
+              <a  href="home/popup" onclick="window.open(this.href, "group","width=370, height=360, resizable=yes, scrollbars=yes");return false;" target="_blank">
+                <button type='submit' class='btn btn-info'>+</button> 
+              </a>
+            </div>
             <h4>공유 시간표</h4>
           </div>
       <% if user_signed_in? %>
